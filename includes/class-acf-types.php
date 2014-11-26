@@ -98,17 +98,18 @@ class ACF_Types {
 		$this->existing_types = array();
 		$types = ACF_Types::get_custom_types();
 
-		$menu_position = apply_filters('acf_types_initial_menu_position', 30);
+		$menu_position = apply_filters('acf_types_initial_menu_position', 300);
 		foreach($types as $type)
 		{
 
 			$args = self::get_post_args($type->ID, $menu_position);
-//			echo '<pre>';
-////			print_r($type);
+		//	echo '<pre>';
+///			print_r($type);
 //			print_r(get_fields($type->ID));
-//			print_r($args);
-//			echo '</pre>';
+		//	print_r($args);
+		//	echo '</pre>';
 
+			//echo $type->post_title . '<br />';
 			register_post_type( $type->post_title, $args );
 
 			$menu_position++;
@@ -123,10 +124,10 @@ class ACF_Types {
 	{
 
 		if ($menu_position == null)
-			$menu_position = apply_filters('acf_types_initial_menu_position', 30);
+			$menu_position = apply_filters('acf_types_initial_menu_position', 300);
 
 		//	get field values
-		$args = wp_parse_args( get_fields($type_id), array(
+		$args = array_replace_recursive( get_fields($type_id), array(
 			'menu_position' 			=> $menu_position,
 			'menu_icon' 				=> 'dashicons-admin-post'
 		));
@@ -191,7 +192,7 @@ class ACF_Types {
 	public function get_custom_types()
 	{
 		return get_posts(array(
-			'post_per_page' => -1,
+			'posts_per_page' => -1,
 			'post_type' => apply_filters('acf-types_type_name', ACF_Types::DEFAULT_TYPE_NAME)
 		));
 	}
