@@ -37,6 +37,7 @@ class ACF_Types {
 		//	register custom post types
 		$this->loader->add_action( 'init', $this, 'load_custom_types' );
 		$this->loader->add_action( 'admin_notices', $this, 'admin_notices' );
+		$this->loader->add_action( 'acf/settings/load_json', $this, 'load_json' );
 
 
 	}
@@ -81,13 +82,16 @@ class ACF_Types {
 			'capability_type'     => 'post'
 		) );
 
-		//	TODO: load post types
-
 	}
 
 	/*
 	*    TYPE LOADER
 	*/
+
+	function load_json( $paths ) {
+		$paths[] = plugin_dir_path(__FILE__).'../field-groups/types';
+		return $paths;
+	}
 
 	public function load_custom_types()
 	{
