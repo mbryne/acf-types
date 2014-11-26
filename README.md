@@ -1,4 +1,6 @@
-=== ACF Types ===
+ACF Types
+=========
+
 Contributors: mbryne
 Tags: private
 Requires at least: 4.0.0
@@ -8,15 +10,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Register WordPress custom post types using Advanced Custom Fields
 
+Changelog
 == Description ==
-
-== Installation ==
-
-== Frequently Asked Questions ==
-
-== Screenshots ==
-
-== Changelog ==
 
 = 1.0 =
 * Initial Plugin Version.
