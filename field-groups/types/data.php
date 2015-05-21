@@ -12,7 +12,7 @@ $group = array (
       'prefix' => '',
       'type' => 'text',
       'instructions' => 'General name for the post type, usually plural. ',
-      'required' => 0,
+      'required' => 1,
       'conditional_logic' => 0,
       'wrapper' => 
       array (
@@ -36,7 +36,7 @@ $group = array (
       'prefix' => '',
       'type' => 'text',
       'instructions' => 'Name for one object of this post type. ',
-      'required' => 0,
+      'required' => 1,
       'conditional_logic' => 0,
       'wrapper' => 
       array (

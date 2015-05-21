@@ -111,7 +111,7 @@ class ACF_Types {
 		$this->existing_types = array();
 		$types = ACF_Types::get_custom_types();
 
-		$menu_position = apply_filters('acf_types_initial_menu_position', 300);
+		$menu_position = apply_filters('acf_types_initial_menu_position', 301);
 		foreach($types as $type)
 		{
 
@@ -138,7 +138,7 @@ class ACF_Types {
 	{
 
 		if ($menu_position == null)
-			$menu_position = apply_filters('acf_types_initial_menu_position', 300);
+			$menu_position = apply_filters('acf_types_initial_menu_position', 301);
 
 		//	get field values
 		$args = array_replace_recursive( get_fields($type_id), array(
@@ -186,14 +186,13 @@ class ACF_Types {
 		if ( $post != null && $post->post_status == 'publish' && $screen->id == 'acf_type' ) {
 
 			$post_title = get_the_title($post->ID);
-			echo '<div class="updated">';
-			echo '<p>If you would like to disable this plugin you can add this code to your functions.php to register this post type:</p>';
-			echo '<pre>';
-			echo 'register_post_type("' . $post_title . '", ';
-			echo var_export(self::get_post_args($post->ID), TRUE);
-			echo ');';
-
-			echo '</div>';
+			echo  '<div class="updated">'
+                . '<p>If you would like to disable this plugin you can add this code to your functions.php to register this post type:</p>'
+                . '<pre>'
+                . 'register_post_type("' . $post_title . '", '
+			    . var_export(self::get_post_args($post->ID), TRUE)
+			    . ');'
+			    . '</div>';
 		}
 
 		if (count($this->existing_types) > 0) {
@@ -202,6 +201,13 @@ class ACF_Types {
 				$types[] = $type->name;
 			echo '<div class="error"><p><b>Warning:</b> ACF_Types couldn\'t load the following post types as they already exist: ' . join( ',', $types ) . '</p></div>';
 		}
+
+        if ( $screen->action == 'add' && $screen->id == 'acf_type' ) {
+            echo  '<div class="updated">'
+                . '<p>The new post type title should be lowercase and a maximum of 20 characters</p>'
+                . '</div>';
+        }
+
 	}
 
 }
