@@ -17,7 +17,7 @@
  * Plugin URI:        http://apper.com.au/wordpress-plugin/
  * Description:       Dead simple Post Type Management for use with Advanced Custom Fields.
  * Version:           1.0.0
- * Author:            ACF_Types
+ * Author:            mbryne
  * Author URI:        http://apper.com.au/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -30,12 +30,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/class-acf-types.php';
+require_once plugin_dir_path( __FILE__ ) . 'classes/ACF_Types.php';
 
-function run_ACF_Types() {
-
-	$plugin = new ACF_Types();
-	$plugin->run();
-
-}
-run_ACF_Types();
+$acf_types = ACF_Types::get_instance();

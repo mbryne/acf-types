@@ -1,12 +1,12 @@
 <?php 
 $group = array (
-  'key' => 'group_542ff23c7624c',
+  'key' => 'group_5469d2f5c7388',
   'title' => 'Types',
   'fields' => 
   array (
     0 => 
     array (
-      'key' => 'field_54306de633151',
+      'key' => 'field_5469d2f5c8e4b',
       'label' => 'Label',
       'name' => 'label',
       'prefix' => '',
@@ -14,6 +14,12 @@ $group = array (
       'instructions' => 'General name for the post type, usually plural. ',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'default_value' => '',
       'placeholder' => '',
       'prepend' => '',
@@ -24,7 +30,7 @@ $group = array (
     ),
     1 => 
     array (
-      'key' => 'field_5430def933152',
+      'key' => 'field_5469d2f5c8e98',
       'label' => 'Singular Label',
       'name' => 'singular_label',
       'prefix' => '',
@@ -32,6 +38,12 @@ $group = array (
       'instructions' => 'Name for one object of this post type. ',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'default_value' => '',
       'placeholder' => '',
       'prepend' => '',
@@ -42,7 +54,7 @@ $group = array (
     ),
     2 => 
     array (
-      'key' => 'field_5430e01133153',
+      'key' => 'field_5469d2f5c8efa',
       'label' => 'Description',
       'name' => 'description',
       'prefix' => '',
@@ -50,6 +62,12 @@ $group = array (
       'instructions' => 'A short descriptive summary of what the post type is.',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'default_value' => '',
       'placeholder' => '',
       'prepend' => '',
@@ -60,7 +78,7 @@ $group = array (
     ),
     3 => 
     array (
-      'key' => 'field_5430e10b33156',
+      'key' => 'field_5469d2f5c8f5b',
       'label' => 'Menu Position',
       'name' => 'menu_position',
       'prefix' => '',
@@ -68,6 +86,12 @@ $group = array (
       'instructions' => 'The position in the menu order the post type should appear.',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'default_value' => '',
       'placeholder' => '',
       'prepend' => '',
@@ -80,7 +104,7 @@ $group = array (
     ),
     4 => 
     array (
-      'key' => 'field_5430e13733157',
+      'key' => 'field_5469d2f5c8fbc',
       'label' => 'Menu Icon',
       'name' => 'menu_icon',
       'prefix' => '',
@@ -88,6 +112,12 @@ $group = array (
       'instructions' => 'The url to the icon to be used for this menu or the name of the icon from the iconfont',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'default_value' => '',
       'placeholder' => '',
       'prepend' => '',
@@ -98,7 +128,7 @@ $group = array (
     ),
     5 => 
     array (
-      'key' => 'field_5430e08733155',
+      'key' => 'field_5469d2f5c901c',
       'label' => 'Show UI',
       'name' => 'show_ui',
       'prefix' => '',
@@ -106,12 +136,18 @@ $group = array (
       'instructions' => 'Whether to generate a default UI for managing this post type in the admin.',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'message' => '',
       'default_value' => 1,
     ),
     6 => 
     array (
-      'key' => 'field_5430e18933158',
+      'key' => 'field_5469d2f5c90d2',
       'label' => 'Hierarchical',
       'name' => 'hierarchical',
       'prefix' => '',
@@ -119,12 +155,18 @@ $group = array (
       'instructions' => '',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'message' => '',
       'default_value' => 0,
     ),
     7 => 
     array (
-      'key' => 'field_5430e19833159',
+      'key' => 'field_5469d2f5c9152',
       'label' => 'Supports',
       'name' => 'supports',
       'prefix' => '',
@@ -132,6 +174,12 @@ $group = array (
       'instructions' => 'Registers support of certain feature(s) for a given post type.',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'choices' => 
       array (
         'title' => 'title',
@@ -155,7 +203,7 @@ $group = array (
     ),
     8 => 
     array (
-      'key' => 'field_5430e2783315a',
+      'key' => 'field_5469d2f5c91bd',
       'label' => 'Has Archive',
       'name' => 'has_archive',
       'prefix' => '',
@@ -163,6 +211,12 @@ $group = array (
       'instructions' => '',
       'required' => 0,
       'conditional_logic' => 0,
+      'wrapper' => 
+      array (
+        'width' => '',
+        'class' => '',
+        'id' => '',
+      ),
       'message' => '',
       'default_value' => 1,
     ),

@@ -2,45 +2,56 @@
 
 class ACF_Types {
 
+    private static $instance = null;
+
+    const DEFAULT_TYPE_NAME = 'acf_type';
+
+    private $path = 'acf-types';
+
+    protected $existing_types;
+
+    protected $version;
+    protected $plugin_name;
+    protected $plugin_dir;
+    protected $type_name;
+
 	/*
 	*    INITIALISATION
 	*/
 
-	const DEFAULT_TYPE_NAME = 'acf_type';
-
-	protected $loader;
-	protected $public;
-	protected $admin;
-	protected $plugin_name;
-	protected $plugin_dir;
-	protected $type_name;
-	protected $version;
-
-	protected $existing_types;
 
 	public function __construct() {
 
 		$this->version    = '1.0.0';
 		$this->plugin_name = 'acf-types';
-		$this->plugin_dir = plugin_dir_path( dirname(dirname(__FILE__)) . '/acf-types.php' );
+		$this->plugin_dir = plugin_dir_path( $this->get_dir('acf-types.php') );
 		$this->type_name = apply_filters('acf_types_type_name', ACF_Types::DEFAULT_TYPE_NAME);
 
-		//  load dependencies
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-acf-types-loader.php';
+        //  register post types object type
+        add_action( 'init', array($this, 'register_types') );
 
-		//  initialize dependencies
-		$this->loader = new ACF_Types_Loader();
-
-		//  register post types object type
-		$this->loader->add_action( 'init', $this, 'register_types' );
-
-		//	register custom post types
-		$this->loader->add_action( 'init', $this, 'load_custom_types' );
-		$this->loader->add_action( 'admin_notices', $this, 'admin_notices' );
-		$this->loader->add_action( 'acf/settings/load_json', $this, 'load_json' );
-
+        //	register custom post types
+        add_action( 'init', array($this, 'load_custom_types') );
+        add_action( 'admin_notices', array($this, 'admin_notices') );
+        add_action( 'acf/settings/load_json', array($this, 'load_json' ) );
 
 	}
+
+    public static function get_instance() {
+        if ( null == self::$instance ) {
+            self::$instance = new self;
+        }
+        return self::$instance;
+    }
+
+    public function get_dir($path = null) {
+        $dir = WP_PLUGIN_DIR . '/' . $this->path;
+        if (!is_null($path) && $path{0} != '/') {
+            $path = '/' . $path;
+        }
+
+        return $dir . $path;
+    }
 
 	/*
 	*    TYPES
@@ -88,11 +99,13 @@ class ACF_Types {
 	*    TYPE LOADER
 	*/
 
-	function load_json( $paths ) {
-		$paths[] = plugin_dir_path(__FILE__).'../field-groups/types';
-		return $paths;
-	}
-
+    public static function get_custom_types()
+    {
+        return get_posts(array(
+            'posts_per_page' => -1,
+            'post_type' => apply_filters('acf_types_type_name', ACF_Types::DEFAULT_TYPE_NAME)
+        ));
+    }
 	public function load_custom_types()
 	{
 		$this->existing_types = array();
@@ -102,25 +115,26 @@ class ACF_Types {
 		foreach($types as $type)
 		{
 
-			$args = self::get_post_args($type->ID, $menu_position);
-		//	echo '<pre>';
-///			print_r($type);
-//			print_r(get_fields($type->ID));
-		//	print_r($args);
-		//	echo '</pre>';
+			$args = $this->get_post_args($type->ID, $menu_position);
 
-			//echo $type->post_title . '<br />';
+            /*
+			echo '<pre>';
+			print_r($type);
+			print_r(get_fields($type->ID));
+			print_r($args);
+			echo '</pre>';
+			echo $type->post_title . '<br />';
+            */
+
 			register_post_type( $type->post_title, $args );
 
 			$menu_position++;
 
 		}
 
-		//flush_rewrite_rules();
-
 	}
 
-	public static function get_post_args($type_id, $menu_position = null)
+	public function get_post_args($type_id, $menu_position = null)
 	{
 
 		if ($menu_position == null)
@@ -137,7 +151,6 @@ class ACF_Types {
 		{
 			$plural = $args['label'];
 			$singular = $args['singular_label'];
-
 			$args['labels'] = array(
 				'name'					=> $plural,
 				'singular_name'			=> $singular,
@@ -159,16 +172,22 @@ class ACF_Types {
 
 	}
 
-	function admin_notices(){
+    public function load_json( $paths ) {
+        $paths[] = $this->get_dir().'/field-groups/types';
+        return $paths;
+    }
+
+    function admin_notices(){
 
 		global $post;
+
 		$screen = get_current_screen();
 
 		if ( $post != null && $post->post_status == 'publish' && $screen->id == 'acf_type' ) {
 
 			$post_title = get_the_title($post->ID);
 			echo '<div class="updated">';
-			echo '<p>Add this code to your functions.php to register this post type:</p>';
+			echo '<p>If you would like to disable this plugin you can add this code to your functions.php to register this post type:</p>';
 			echo '<pre>';
 			echo 'register_post_type("' . $post_title . '", ';
 			echo var_export(self::get_post_args($post->ID), TRUE);
@@ -183,44 +202,6 @@ class ACF_Types {
 				$types[] = $type->name;
 			echo '<div class="error"><p><b>Warning:</b> ACF_Types couldn\'t load the following post types as they already exist: ' . join( ',', $types ) . '</p></div>';
 		}
-	}
-
-/*
-*    UTILITIES
-*/
-
-	public function get_custom_types()
-	{
-		return get_posts(array(
-			'posts_per_page' => -1,
-			'post_type' => apply_filters('acf-types_type_name', ACF_Types::DEFAULT_TYPE_NAME)
-		));
-	}
-
-	public static function get_type_fields()
-	{
-		acf_disable_local();
-		$groups = wp_filter_object_list(acf_get_field_groups(), array('title' => 'Types'));
-		acf_enable_local();
-		if (count($groups) == 0)
-			return array();
-		return acf_get_fields_by_id($groups[0]['ID']);
-	}
-
-	public function run() {
-		$this->loader->run();
-	}
-
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	public function get_version() {
-		return $this->version;
 	}
 
 }
